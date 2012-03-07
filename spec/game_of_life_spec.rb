@@ -1,25 +1,11 @@
 describe "In the next gen, a grid with" do
-  context "no live cells" do
-    it "should have no live cells" do
-      g = []
-      ng = next_gen(g)
-      ng.should == []
-    end
-  end
-
-  context "one live cell" do
-    it "should have no live cells" do
-      g = [[0,0]]
-      ng = next_gen(g)
-      ng.should == []
-    end
-  end
-
-  context "two live cells" do
-    it "should have no live cells" do
-      g = [[0,0], [0,1]]
-      ng = next_gen(g)
-      ng.should == []
+  [[], [[0,0]], [[0,0], [0,1]]].each do |cells|
+    context "#{cells.size} live cells" do
+      it "should have no live cells" do
+        g = cells
+        ng = next_gen(g)
+        ng.should == []
+      end
     end
   end
 
