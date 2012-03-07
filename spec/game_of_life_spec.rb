@@ -15,6 +15,14 @@ describe "In the next gen, a grid with" do
     end
   end
 
+  context "two live cells" do
+    it "should have no live cells" do
+      g = [[0,0], [0,1]]
+      ng = next_gen(g)
+      ng.should == []
+    end
+  end
+
   def next_gen(grid)
     []
   end
