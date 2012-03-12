@@ -12,7 +12,8 @@ class Grid
   end
 
   def next_gen
-    live_locations.select { |location| [2, 3].include?(live_neighbors_of(location).count) }
+    (live_locations.select { |location| [2, 3].include?(live_neighbors_of(location).count) } +
+      live_locations.flat_map { |location| neighbors_of(location) }.select { |location| live_neighbors_of(location).count == 3 }).uniq
   end
 
   def live_neighbors_of(location)
@@ -53,9 +54,7 @@ describe "In the next gen, a grid with" do
   context "3 live cells in a row" do
     it "should have instead 3 live cells in a column, with the middle cell unchanged" do
       g = [[0,0], [0,1], [0,2]]
-      grid = Grid.new(g)
-      ng = grid.next_gen + g.flat_map { |location| neighbors_of(location) }.select { |location| grid.live_neighbors_of(location).count == 3 }.uniq
-      ng.should =~ [[-1,1], [0,1], [1,1]]
+      next_gen(g).should =~ [[-1,1], [0,1], [1,1]]
     end
   end
 
