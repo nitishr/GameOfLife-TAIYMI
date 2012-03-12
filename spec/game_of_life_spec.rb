@@ -24,3 +24,15 @@ describe "In the next gen, a grid with" do
     []
   end
 end
+
+describe "a location's neighbors" do
+  it "should be all locations offset by a single row and/or column" do
+    location = [0,0]
+    neighbors = [[-1,-1], [-1,0], [-1,1],
+                 [ 0,-1],         [ 0,1],
+                 [ 1,-1], [ 1,0], [ 1,1]]
+    neighbors.should =~ [[-1,-1], [-1,0], [-1,1],
+                         [ 0,-1],         [ 0,1],
+                         [ 1,-1], [ 1,0], [ 1,1]]
+  end
+end
