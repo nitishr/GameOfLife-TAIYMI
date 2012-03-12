@@ -27,7 +27,11 @@ describe "In the next gen, a grid with" do
 
   def next_gen(grid)
     @grid = grid
-    @grid.select { |location| neighbors_of(location).select { |neighbor| alive?(neighbor) }.count == 2 }
+    @grid.select { |location| live_neighbors_of(location).count == 2 }
+  end
+
+  def live_neighbors_of(location)
+    neighbors_of(location).select { |neighbor| alive?(neighbor) }
   end
 
   def alive?(location)
