@@ -12,7 +12,8 @@ class Grid
   end
 
   def next_gen
-    live_locations.select { |location| live_neighbors_of(location).count == 2 }
+    live_locations.select { |location| live_neighbors_of(location).count == 2 } +
+      live_locations.select { |location| live_neighbors_of(location).count == 3 }
   end
 
   def live_neighbors_of(location)
@@ -46,9 +47,7 @@ describe "In the next gen, a grid with" do
     it "should remain unchanged" do
       g = [[0,0], [0,1],
            [1,0], [1,1]]
-      grid = Grid.new(g)
-      ng = grid.next_gen + g.select { |location| grid.live_neighbors_of(location).count == 3 }
-      ng.should == g
+      next_gen(g).should == g
     end
   end
 
