@@ -42,6 +42,16 @@ describe "In the next gen, a grid with" do
     end
   end
 
+  context "4 live cells in a square block" do
+    it "should remain unchanged" do
+      g = [[0,0], [0,1],
+           [1,0], [1,1]]
+      grid = Grid.new(g)
+      ng = grid.next_gen + g.select { |location| grid.live_neighbors_of(location).count == 3 }
+      ng.should == g
+    end
+  end
+
   def next_gen(live_locations)
     Grid.new(live_locations).next_gen
   end
