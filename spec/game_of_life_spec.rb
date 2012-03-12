@@ -4,13 +4,31 @@ def neighbors_of(location)
    [ 1,-1], [ 1,0], [ 1,1]].map { |offset| [offset[0] + location[0], offset[1] + location[1]] }
 end
 
+class Grid
+  attr_reader :live_locations
+
+  def initialize(live_locations)
+    @live_locations = live_locations 
+  end
+
+  def next_gen
+    live_locations.select { |location| live_neighbors_of(location).count == 2 }
+  end
+
+  def live_neighbors_of(location)
+    neighbors_of(location).select { |neighbor| alive?(neighbor) }
+  end
+
+  def alive?(location)
+    live_locations.include?(location)
+  end
+end
+
 describe "In the next gen, a grid with" do
-  [[], [[0,0]], [[0,0], [0,1]]].each do |cells|
-    context "#{cells.size} live cells" do
+  [[], [[0,0]], [[0,0], [0,1]]].each do |g|
+    context "#{g.size} live cells" do
       it "should have no live cells" do
-        g = cells
-        ng = next_gen(g)
-        ng.should == []
+        next_gen(g).should == []
       end
     end
   end
@@ -20,21 +38,12 @@ describe "In the next gen, a grid with" do
       g = [[0,0],
                   [1,1],
                          [2,2]]
-      ng = next_gen(g)
-      ng.should == [[1,1]]
+      next_gen(g).should == [[1,1]]
     end
   end
 
-  def next_gen(grid)
-    grid.select { |location| live_neighbors_of(location, grid).count == 2 }
-  end
-
-  def live_neighbors_of(location, grid)
-    neighbors_of(location).select { |neighbor| alive?(neighbor, grid) }
-  end
-
-  def alive?(location, grid)
-    grid.include?(location)
+  def next_gen(live_locations)
+    Grid.new(live_locations).next_gen
   end
 end
 
