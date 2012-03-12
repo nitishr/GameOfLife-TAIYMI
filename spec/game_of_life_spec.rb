@@ -13,7 +13,19 @@ class Grid
 
   def next_gen
     (surviving(live_locations) +
-      live_locations.flat_map { |location| neighbors_of(location) }.select { |location| live_neighbors_of(location).count == 3 }).uniq
+      vivifying(live_locations.flat_map { |location| dead_neighbors_of(location) })).uniq
+  end
+
+  def dead_neighbors_of(location)
+    neighbors_of(location).reject { |neighbor| alive?(neighbor) }
+  end
+
+  def vivifying(locations)
+    locations.select { |location| vivifying?(location) }
+  end
+
+  def vivifying?(location)
+    live_neighbors_of(location).count == 3 
   end
 
   def surviving(locations)
