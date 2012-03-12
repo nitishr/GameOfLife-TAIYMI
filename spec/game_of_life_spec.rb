@@ -12,8 +12,7 @@ class Grid
   end
 
   def next_gen
-    live_locations.select { |location| live_neighbors_of(location).count == 2 } +
-      live_locations.select { |location| live_neighbors_of(location).count == 3 }
+    live_locations.select { |location| [2, 3].include?(live_neighbors_of(location).count) }
   end
 
   def live_neighbors_of(location)
