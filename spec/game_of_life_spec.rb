@@ -25,13 +25,22 @@ describe "In the next gen, a grid with" do
   end
 end
 
-describe "a location's neighbors" do
-  it "should be all locations offset by a single row and/or column" do
+describe "neighbors of location" do
+  it "[0,0] should be [-1,-1], [-1,0], [-1,1], [ 0,-1], [ 0,1], [ 1,-1], [ 1,0], [ 1,1] in any order" do
     location = [0,0]
     neighbors_of(location).should =~ [[-1,-1], [-1,0], [-1,1],
                                       [ 0,-1],         [ 0,1],
                                       [ 1,-1], [ 1,0], [ 1,1]]
   end
+
+  it "[1,2] should be [0,1], [0,2], [0,3], [1,1], [1,3], [2,1], [2,2], [2,3] in any order" do
+    location = [1,2]
+    neighbors = neighbors_of(location).map { |loc| [loc[0] + location[0], loc[1] + location[1]] }
+    neighbors.should =~ [[0,1], [0,2], [0,3],
+                         [1,1],        [1,3],
+                         [2,1], [2,2], [2,3]]
+  end
+
 
   def neighbors_of(location)
     [[-1,-1], [-1,0], [-1,1],
