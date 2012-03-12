@@ -21,13 +21,12 @@ describe "In the next gen, a grid with" do
                   [1,1],
                          [2,2]]
       ng = next_gen(g)
-      ng = g.select { |location| neighbors_of(location).select { |neighbor| g.include?(neighbor) }.count == 2 }
       ng.should == [[1,1]]
     end
   end
 
   def next_gen(grid)
-    []
+    grid.select { |location| neighbors_of(location).select { |neighbor| grid.include?(neighbor) }.count == 2 }
   end
 end
 
