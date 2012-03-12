@@ -50,6 +50,15 @@ describe "In the next gen, a grid with" do
     end
   end
 
+  context "3 live cells in a row" do
+    it "should have instead 3 live cells in a column, with the middle cell unchanged" do
+      g = [[0,0], [0,1], [0,2]]
+      grid = Grid.new(g)
+      ng = grid.next_gen + g.flat_map { |location| neighbors_of(location) }.select { |location| grid.live_neighbors_of(location).count == 3 }.uniq
+      ng.should =~ [[-1,1], [0,1], [1,1]]
+    end
+  end
+
   def next_gen(live_locations)
     Grid.new(live_locations).next_gen
   end
