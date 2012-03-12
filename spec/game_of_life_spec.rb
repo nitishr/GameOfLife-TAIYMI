@@ -1,3 +1,9 @@
+def neighbors_of(location)
+  [[-1,-1], [-1,0], [-1,1],
+   [ 0,-1],         [ 0,1],
+   [ 1,-1], [ 1,0], [ 1,1]].map { |offset| [offset[0] + location[0], offset[1] + location[1]] }
+end
+
 describe "In the next gen, a grid with" do
   [[], [[0,0]], [[0,0], [0,1]]].each do |cells|
     context "#{cells.size} live cells" do
@@ -15,7 +21,7 @@ describe "In the next gen, a grid with" do
                   [1,1],
                          [2,2]]
       ng = next_gen(g)
-      pending "calculation of neighbors"
+      ng = g.select { |location| neighbors_of(location).select { |neighbor| g.include?(neighbor) }.count == 2 }
       ng.should == [[1,1]]
     end
   end
@@ -38,11 +44,5 @@ describe "neighbors of location" do
     neighbors_of(location).should =~ [[0,1], [0,2], [0,3],
                                       [1,1],        [1,3],
                                       [2,1], [2,2], [2,3]]
-  end
-
-  def neighbors_of(location)
-    [[-1,-1], [-1,0], [-1,1],
-     [ 0,-1],         [ 0,1],
-     [ 1,-1], [ 1,0], [ 1,1]].map { |offset| [offset[0] + location[0], offset[1] + location[1]] }
   end
 end
