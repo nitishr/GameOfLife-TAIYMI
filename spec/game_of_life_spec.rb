@@ -28,11 +28,14 @@ end
 describe "a location's neighbors" do
   it "should be all locations offset by a single row and/or column" do
     location = [0,0]
-    neighbors = [[-1,-1], [-1,0], [-1,1],
-                 [ 0,-1],         [ 0,1],
-                 [ 1,-1], [ 1,0], [ 1,1]]
-    neighbors.should =~ [[-1,-1], [-1,0], [-1,1],
-                         [ 0,-1],         [ 0,1],
-                         [ 1,-1], [ 1,0], [ 1,1]]
+    neighbors_of(location).should =~ [[-1,-1], [-1,0], [-1,1],
+                                      [ 0,-1],         [ 0,1],
+                                      [ 1,-1], [ 1,0], [ 1,1]]
+  end
+
+  def neighbors_of(location)
+    [[-1,-1], [-1,0], [-1,1],
+     [ 0,-1],         [ 0,1],
+     [ 1,-1], [ 1,0], [ 1,1]]
   end
 end
