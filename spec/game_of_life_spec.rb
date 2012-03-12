@@ -9,6 +9,17 @@ describe "In the next gen, a grid with" do
     end
   end
 
+  context "3 live cells in a diagonal" do
+    it "should have only the middle cell alive" do
+      g = [[0,0],
+                  [1,1],
+                         [2,2]]
+      ng = next_gen(g)
+      pending "calculation of neighbors"
+      ng.should == [[1,1]]
+    end
+  end
+
   def next_gen(grid)
     []
   end
