@@ -12,8 +12,16 @@ class Grid
   end
 
   def next_gen
-    (live_locations.select { |location| [2, 3].include?(live_neighbors_of(location).count) } +
+    (surviving(live_locations) +
       live_locations.flat_map { |location| neighbors_of(location) }.select { |location| live_neighbors_of(location).count == 3 }).uniq
+  end
+
+  def surviving(locations)
+    locations.select { |location| surviving?(location) }
+  end
+
+  def surviving?(location)
+    [2, 3].include?(live_neighbors_of(location).count)
   end
 
   def live_neighbors_of(location)
