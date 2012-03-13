@@ -12,8 +12,7 @@ class Grid
   end
 
   def next_gen
-    (surviving(live_locations) +
-      vivifying(dead(neighbors_of_all(live_locations))))
+    surviving(live_locations) + vivifying(dead(neighbors_of_all(live_locations)))
   end
 
   def neighbors_of_all(locations)
@@ -53,7 +52,7 @@ describe "In the next gen, a grid with" do
   [[], [[0,0]], [[0,0], [0,1]]].each do |g|
     context "#{g.size} live cells" do
       it "should have no live cells" do
-        next_gen(g).should == []
+        next_gen(g).should =~ []
       end
     end
   end
@@ -63,7 +62,7 @@ describe "In the next gen, a grid with" do
       g = [[0,0],
                   [1,1],
                          [2,2]]
-      next_gen(g).should == [[1,1]]
+      next_gen(g).should =~ [[1,1]]
     end
   end
 
@@ -71,7 +70,7 @@ describe "In the next gen, a grid with" do
     it "should remain unchanged" do
       g = [[0,0], [0,1],
            [1,0], [1,1]]
-      next_gen(g).should == g
+      next_gen(g).should =~ g
     end
   end
 
