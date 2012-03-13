@@ -8,7 +8,7 @@ class Grid
   attr_reader :live_locations
 
   def initialize(live_locations)
-    @live_locations = live_locations 
+    @live_locations = live_locations.uniq
   end
 
   def next_gen
