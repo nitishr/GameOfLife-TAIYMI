@@ -28,7 +28,7 @@ class Grid
   end
 
   def dead(locations)
-    locations.reject { |neighbor| alive?(neighbor) }
+    locations.reject { |location| alive?(location) }
   end
 
   def surviving(locations)
@@ -40,7 +40,7 @@ class Grid
   end
 
   def live(locations)
-    locations.select { |neighbor| alive?(neighbor) }
+    locations.select { |location| alive?(location) }
   end
 
   def alive?(location)
