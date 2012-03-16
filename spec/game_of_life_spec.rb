@@ -81,6 +81,17 @@ describe "In the next gen, a grid with" do
     end
   end
 
+  context "5 live cells forming a +" do
+    it "should have instead 8 live cells forming a hollow square" do
+      g = [        [-1,0],
+           [0,-1], [ 0,0], [0,1],
+                   [ 1,0]        ]
+      next_gen(g).should =~ [[-1,-1], [-1,0], [-1,1],
+                             [ 0,-1],         [ 0,1],
+                             [ 1,-1], [ 1,0], [ 1,1]]
+    end
+  end
+
   def next_gen(live_locations)
     Grid.new(live_locations).next_gen
   end
