@@ -1,50 +1,50 @@
-def neighbors_of(location)
+def neighbors_of(cell)
   [[-1,-1], [-1,0], [-1,1],
    [ 0,-1],         [ 0,1],
-   [ 1,-1], [ 1,0], [ 1,1]].map { |offset| [offset[0] + location[0], offset[1] + location[1]] }
+   [ 1,-1], [ 1,0], [ 1,1]].map { |offset| [offset[0] + cell[0], offset[1] + cell[1]] }
 end
 
 class Grid
-  attr_reader :live_locations
+  attr_reader :live_cells
 
-  def initialize(live_locations)
-    @live_locations = live_locations.uniq
+  def initialize(live_cells)
+    @live_cells = live_cells.uniq
   end
 
   def next_gen
-    surviving(live_locations) + vivifying(dead(neighbors_of_all(live_locations)))
+    surviving(live_cells) + vivifying(dead(neighbors_of_all(live_cells)))
   end
 
-  def neighbors_of_all(locations)
-    locations.flat_map { |location| neighbors_of(location) }.uniq
+  def neighbors_of_all(cells)
+    cells.flat_map { |cell| neighbors_of(cell) }.uniq
   end
 
-  def vivifying(locations)
-    locations.select { |location| vivifying?(location) }
+  def vivifying(cells)
+    cells.select { |cell| vivifying?(cell) }
   end
 
-  def vivifying?(location)
-    live(neighbors_of(location)).count == 3 
+  def vivifying?(cell)
+    live(neighbors_of(cell)).count == 3 
   end
 
-  def dead(locations)
-    locations.reject { |location| alive?(location) }
+  def dead(cells)
+    cells.reject { |cell| alive?(cell) }
   end
 
-  def surviving(locations)
-    locations.select { |location| surviving?(location) }
+  def surviving(cells)
+    cells.select { |cell| surviving?(cell) }
   end
 
-  def surviving?(location)
-    [2, 3].include?(live(neighbors_of(location)).count)
+  def surviving?(cell)
+    [2, 3].include?(live(neighbors_of(cell)).count)
   end
 
-  def live(locations)
-    locations.select { |location| alive?(location) }
+  def live(cells)
+    cells.select { |cell| alive?(cell) }
   end
 
-  def alive?(location)
-    live_locations.include?(location)
+  def alive?(cell)
+    live_cells.include?(cell)
   end
 end
 
@@ -105,23 +105,23 @@ describe "In the next gen, a grid with" do
     end
   end
 
-  def next_gen(live_locations)
-    Grid.new(live_locations).next_gen
+  def next_gen(live_cells)
+    Grid.new(live_cells).next_gen
   end
 end
 
-describe "neighbors of location" do
+describe "neighbors of cell" do
   it "[0,0] should be [-1,-1], [-1,0], [-1,1], [ 0,-1], [ 0,1], [ 1,-1], [ 1,0], [ 1,1] in any order" do
-    location = [0,0]
-    neighbors_of(location).should =~ [[-1,-1], [-1,0], [-1,1],
-                                      [ 0,-1],         [ 0,1],
-                                      [ 1,-1], [ 1,0], [ 1,1]]
+    cell = [0,0]
+    neighbors_of(cell).should =~ [[-1,-1], [-1,0], [-1,1],
+                                  [ 0,-1],         [ 0,1],
+                                  [ 1,-1], [ 1,0], [ 1,1]]
   end
 
   it "[1,2] should be [0,1], [0,2], [0,3], [1,1], [1,3], [2,1], [2,2], [2,3] in any order" do
-    location = [1,2]
-    neighbors_of(location).should =~ [[0,1], [0,2], [0,3],
-                                      [1,1],        [1,3],
-                                      [2,1], [2,2], [2,3]]
+    cell = [1,2]
+    neighbors_of(cell).should =~ [[0,1], [0,2], [0,3],
+                                  [1,1],        [1,3],
+                                  [2,1], [2,2], [2,3]]
   end
 end
